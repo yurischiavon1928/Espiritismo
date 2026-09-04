@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espiritismo — Ética e Valores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ===================== TOKENS ===================== */
+  :root{
+    --void:        #0b101d;
+    --panel:       #121a30;
+    --panel-alt:   #17213c;
+    --gold:        #c9a44c;
+    --gold-soft:   #e6cd88;
+    --gold-dim:    rgba(201,164,76,0.28);
+    --ink:         #ece4d3;
+    --ink-dim:     #9aa5c2;
+    --ink-faint:   #6c7796;
+    --serif:       'Cormorant Garamond', serif;
+    --sans:        'Work Sans', sans-serif;
+    --measure:     62ch;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-weight:400;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:var(--serif);
+    font-weight:500;
+    color:var(--ink);
+    margin:0;
+    letter-spacing:0.01em;
+  }
+
+  p{ margin:0 0 1.1em 0; color:var(--ink-dim); }
+  p:last-child{ margin-bottom:0; }
+
+  a{ color:var(--gold-soft); }
+
+  ::selection{ background:var(--gold-dim); color:var(--ink); }
+
+  :focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .measure{ max-width:var(--measure); }
+
+  /* ===================== LAYOUT HELPERS ===================== */
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 6vw;
+  }
+
+  section{ position:relative; }
+
+  .section-pad{ padding:7.5rem 0; }
+
+  .eyebrow-rule{
+    width:46px;
+    height:1px;
+    background:var(--gold);
+    margin-bottom:1.6rem;
+  }
+
+  .kicker{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.15rem;
+    color:var(--gold-soft);
+    margin-bottom:0.6rem;
+  }
+
+  /* ===================== NAV ===================== */
+  .site-nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1.35rem 6vw;
+    background:linear-gradient(to bottom, rgba(9,13,24,0.75), rgba(9,13,24,0));
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+
+  .site-nav .brand{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.25rem;
+    color:var(--ink);
+    text-decoration:none;
+  }
+
+  .site-nav ul{
+    display:flex;
+    gap:2.1rem;
+    list-style:none;
+    margin:0; padding:0;
+  }
+
+  .site-nav a{
+    color:var(--ink-dim);
+    text-decoration:none;
+    font-size:0.92rem;
+    font-weight:400;
+    letter-spacing:0.01em;
+    padding-bottom:3px;
+    border-bottom:1px solid transparent;
+    transition:color .3s ease, border-color .3s ease;
+  }
+
+  .site-nav a:hover{ color:var(--gold-soft); border-color:var(--gold-dim); }
+
+  .nav-toggle{ display:none; }
+
+  @media (max-width:800px){
+    .site-nav ul{ display:none; }
+  }
+
+  /* ===================== HERO ===================== */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:flex-end;
+    background:
+      linear-gradient(to top, rgba(8,11,21,0.96) 4%, rgba(8,11,21,0.35) 55%, rgba(8,11,21,0.65) 100%),
+      url('https://images.unsplash.com/photo-1667667515352-7311137ef72a?auto=format&fit=crop&w=1920&q=80') center 30% / cover no-repeat fixed;
+  }
+
+  .stars{
+    position:absolute; inset:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .stars span{
+    position:absolute;
+    width:2px; height:2px;
+    background:#fff;
+    border-radius:50%;
+    opacity:0.75;
+    animation:twinkle 4.5s ease-in-out infinite;
+  }
+  .stars span:nth-child(1){ top:14%; left:18%; animation-delay:0s; }
+  .stars span:nth-child(2){ top:22%; left:72%; animation-delay:.8s; }
+  .stars span:nth-child(3){ top:9%;  left:44%; animation-delay:1.6s; }
+  .stars span:nth-child(4){ top:33%; left:86%; animation-delay:2.2s; }
+  .stars span:nth-child(5){ top:41%; left:8%;  animation-delay:1.1s; }
+  .stars span:nth-child(6){ top:6%;  left:63%; animation-delay:2.9s; }
+  .stars span:nth-child(7){ top:27%; left:30%; animation-delay:3.4s; }
+  .stars span:nth-child(8){ top:18%; left:52%; animation-delay:.4s; }
+
+  @keyframes twinkle{
+    0%,100%{ opacity:0.15; transform:scale(1); }
+    50%{ opacity:1; transform:scale(1.6); }
+  }
+
+  .hero-inner{
+    width:100%;
+    padding:0 6vw 9rem;
+    animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(28px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .hero h1{
+    font-size:clamp(3.2rem, 8vw, 6.4rem);
+    line-height:0.98;
+    font-weight:500;
+  }
+
+  .hero .sub{
+    margin-top:1.4rem;
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:clamp(1.15rem, 2vw, 1.5rem);
+    color:var(--ink-dim);
+    max-width:34ch;
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:2.2rem; left:6vw;
+    display:flex; align-items:center; gap:.7rem;
+    color:var(--ink-faint);
+    font-size:0.82rem;
+  }
+  .scroll-cue svg{ animation:bob 2.2s ease-in-out infinite; }
+  @keyframes bob{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(6px); }
+  }
+
+  /* ===================== TWO-COL TEXT+IMAGE ===================== */
+  .split{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:5vw;
+    align-items:center;
+  }
+  .split.reverse .split-media{ order:2; }
+  .split.reverse .split-text{ order:1; }
+
+  .split-media{
+    position:relative;
+    border-radius:2px;
+    overflow:hidden;
+    aspect-ratio:4/5;
+    box-shadow:0 30px 70px -25px rgba(0,0,0,0.65);
+  }
+  .split-media img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    filter:saturate(0.92) brightness(0.92);
+  }
+  .split-media::after{
+    content:"";
+    position:absolute; inset:0;
+    border:1px solid rgba(230,205,136,0.18);
+    pointer-events:none;
+  }
+
+  h2{
+    font-size:clamp(2rem, 3.4vw, 2.9rem);
+    margin-bottom:1.5rem;
+  }
+
+  @media (max-width:900px){
+    .split, .split.reverse{ grid-template-columns:1fr; gap:2.4rem; }
+    .split .split-media, .split.reverse .split-media{ order:1; }
+    .split .split-text, .split.reverse .split-text{ order:2; }
+    .split-media{ aspect-ratio:16/10; }
+  }
+
+  /* ===================== PILARES ===================== */
+  .pilares-head{
+    text-align:left;
+    max-width:44ch;
+    margin-bottom:4rem;
+  }
+
+  .pilares-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--gold-dim);
+  }
+
+  .pilar{
+    padding:2.6rem 2.4rem 0 0;
+    border-right:1px solid var(--gold-dim);
+  }
+  .pilar:last-child{ border-right:none; }
+
+  .pilar svg{ margin-bottom:1.4rem; }
+
+  .pilar h3{
+    font-size:1.5rem;
+    margin-bottom:0.8rem;
+  }
+
+  @media (max-width:800px){
+    .pilares-grid{ grid-template-columns:1fr; border-top:none; }
+    .pilar{
+      border-right:none;
+      border-top:1px solid var(--gold-dim);
+      padding:2.4rem 0 0.4rem;
+    }
+  }
+
+  /* ===================== VALORES ===================== */
+  .valores-head{
+    max-width:52ch;
+    margin-bottom:4.5rem;
+  }
+
+  .valor-row{
+    display:grid;
+    grid-template-columns:0.85fr 1.6fr;
+    gap:3vw;
+    padding:2.6rem 0;
+    border-top:1px solid var(--gold-dim);
+    align-items:baseline;
+  }
+  .valores-list .valor-row:last-child{ border-bottom:1px solid var(--gold-dim); }
+
+  .valor-row h3{
+    font-size:clamp(1.6rem,2.4vw,2.1rem);
+    font-style:italic;
+    color:var(--gold-soft);
+  }
+
+  .valor-row p{ max-width:56ch; }
+
+  @media (max-width:800px){
+    .valor-row{ grid-template-columns:1fr; gap:0.7rem; }
+  }
+
+  /* ===================== FEATURE / FULL-BLEED QUOTE ===================== */
+  .feature{
+    min-height:78vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:6rem 6vw;
+    background-attachment:fixed;
+    background-position:center;
+    background-size:cover;
+    position:relative;
+  }
+  .feature::before{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(9,12,22,0.55), rgba(9,12,22,0.82) 60%, rgba(9,12,22,0.92));
+  }
+  .feature-content{
+    position:relative;
+    max-width:52ch;
+  }
+  .feature blockquote{
+    margin:0 0 1.4rem 0;
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(1.8rem, 4vw, 3rem);
+    line-height:1.25;
+    color:var(--ink);
+  }
+  .feature cite{
+    display:block;
+    font-style:normal;
+    font-size:0.88rem;
+    color:var(--ink-faint);
+    margin-bottom:1.8rem;
+  }
+  .feature .feature-note{
+    color:var(--ink-dim);
+    font-size:1.02rem;
+  }
+
+  .feature.caridade{
+    background-image:url('https://images.unsplash.com/photo-1492176273113-2d51f47b23b0?auto=format&fit=crop&w=1920&q=80');
+  }
+  .feature.encerra{
+    background-image:url('https://images.unsplash.com/photo-1506564461966-4107c88f6d29?auto=format&fit=crop&w=1920&q=80');
+    min-height:70vh;
+  }
+
+  @media (max-width:700px){
+    .feature{ background-attachment:scroll; }
+  }
+
+  /* ===================== FÉ E RAZÃO (plain text section) ===================== */
+  .plain{
+    max-width:64ch;
+  }
+  .plain h2{ margin-bottom:1.8rem; }
+  .plain p + p{ margin-top:1.1em; }
+
+  /* ===================== SECTION BACKGROUND ALTERNATION ===================== */
+  .bg-panel{ background:var(--panel); }
+  .bg-panel-alt{ background:var(--panel-alt); }
+  .bg-void{ background:var(--void); }
+
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+
+  /* ===================== CLOSE ===================== */
+  .closing-mark{
+    padding:5rem 6vw 6rem;
+    text-align:center;
+    color:var(--ink-faint);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.05rem;
+    background:var(--void);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{ animation:none !important; transition:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="#topo">Espiritismo</a>
+  <ul>
+    <li><a href="#essencia">Essência</a></li>
+    <li><a href="#pilares">Pilares</a></li>
+    <li><a href="#valores">Valores</a></li>
+    <li><a href="#caridade">Caridade</a></li>
+    <li><a href="#evolucao">Evolução</a></li>
+    <li><a href="#fe-razao">Fé e razão</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="topo">
+  <div class="stars" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <div class="hero-inner">
+    <h1>Espiritismo</h1>
+    <p class="sub">Ética, razão e amor como caminho de reforma íntima.</p>
+  </div>
+  <div class="scroll-cue">
+    <span>role para conhecer</span>
+    <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 1V19M7 19L1 13M7 19L13 13" stroke="#9aa5c2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</header>
+
+<!-- ===================== ESSÊNCIA ===================== -->
+<section class="section-pad bg-void" id="essencia">
+  <div class="wrap split">
+    <div class="split-text">
+      <div class="eyebrow-rule"></div>
+      <h2>O que é o Espiritismo</h2>
+      <p class="measure">Codificado na França em meados do século XIX por Allan Kardec, o Espiritismo reúne, em corpo de doutrina coerente, respostas sistematizadas sobre a natureza da alma, sua origem, seu destino e sua relação com o mundo material. Não nasceu como sistema de rituais, mas como método de observação de fenômenos e de suas consequências morais.</p>
+      <p class="measure">Sua ética decorre diretamente dessa base: se cada espírito percorre uma trajetória contínua de aperfeiçoamento, o que importa não é a forma externa da crença, mas a transformação real do caráter — a passagem, ao longo de sucessivas existências, do egoísmo para a fraternidade, da ignorância para a compreensão.</p>
+    </div>
+    <div class="split-media">
+      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80" alt="Luz do sol atravessando uma floresta densa, sugerindo um caminho interior">
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== PILARES ===================== -->
+<section class="section-pad bg-panel" id="pilares">
+  <div class="wrap">
+    <div class="pilares-head">
+      <div class="eyebrow-rule"></div>
+      <h2>Três faces de uma só doutrina</h2>
+      <p>Kardec descreveu o Espiritismo como tendo caráter simultaneamente científico, filosófico e religioso — três abordagens de um mesmo objeto, sem clero, sem culto exterior e sem imagens.</p>
+    </div>
+
+    <div class="pilares-grid">
+      <div class="pilar">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="13" cy="13" r="8.5" stroke="#c9a44c" stroke-width="1.2"/>
+          <line x1="19.2" y1="19.2" x2="26" y2="26" stroke="#c9a44c" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <h3>Ciência</h3>
+        <p>Observa os fenômenos que ligam o mundo físico ao mundo espiritual, exigindo método e verificação — não a aceitação cega, mas a análise cuidadosa das manifestações relatadas.</p>
+      </div>
+      <div class="pilar">
+        <svg width="22" height="30" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 1C11 1 4 10 4 17C4 22.5 7.5 26 11 26C14.5 26 18 22.5 18 17C18 10 11 1 11 1Z" stroke="#c9a44c" stroke-width="1.2" stroke-linejoin="round"/>
+          <path d="M11 26V29" stroke="#c9a44c" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <h3>Filosofia</h3>
+        <p>Extrai desses fenômenos suas consequências morais: a origem da alma, o sentido da dor, a razão das desigualdades e o propósito da existência.</p>
+      </div>
+      <div class="pilar">
+        <svg width="34" height="20" viewBox="0 0 34 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 14C6 4 12 10 17 5C22 10 28 4 33 14" stroke="#c9a44c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>Religião</h3>
+        <p>Propõe um código de conduta apoiado no sentido moral do Evangelho, sem hierarquia sacerdotal — cada pessoa é responsável direta pelo próprio progresso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VALORES ===================== -->
+<section class="section-pad bg-void" id="valores">
+  <div class="wrap">
+    <div class="valores-head">
+      <div class="eyebrow-rule"></div>
+      <h2>Valores que orientam a conduta</h2>
+      <p>A ética espírita não se apoia em mandamentos impostos de fora, mas na compreensão de que toda ação, boa ou má, repercute sobre o próprio espírito — cedo ou tarde, nesta existência ou em outra.</p>
+    </div>
+
+    <div class="valores-list">
+      <div class="valor-row">
+        <h3>Caridade</h3>
+        <p>Definida como benevolência para com todos, indulgência diante das imperfeições alheias e ausência de julgamento definitivo sobre ninguém — vai muito além do simples ato de doar.</p>
+      </div>
+      <div class="valor-row">
+        <h3>Fraternidade</h3>
+        <p>Reconhecer, em qualquer pessoa, independentemente de condição, crença ou história, um espírito também em evolução, merecedor do mesmo respeito que se deseja para si.</p>
+      </div>
+      <div class="valor-row">
+        <h3>Humildade</h3>
+        <p>Renunciar ao orgulho e à vaidade, lembrando que ninguém já concluiu sua própria jornada de aprendizagem moral.</p>
+      </div>
+      <div class="valor-row">
+        <h3>Perdão</h3>
+        <p>Não alimentar rancor, compreendendo a ofensa alheia como expressão de imperfeição ainda não superada, e não como motivo definitivo de ruptura.</p>
+      </div>
+      <div class="valor-row">
+        <h3>Justiça</h3>
+        <p>Dar a cada um o que lhe é devido — inclusive a si mesmo — e não fazer aos outros o que não se gostaria que fosse feito a si próprio.</p>
+      </div>
+      <div class="valor-row">
+        <h3>Trabalho e progresso</h3>
+        <p>O esforço, físico ou intelectual, é parte necessária da evolução: nada de essencial se conquista pela inércia ou pela espera passiva.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CARIDADE — FEATURE ===================== -->
+<section class="feature caridade" id="caridade">
+  <div class="feature-content">
+    <blockquote>&ldquo;Fora da caridade não há salvação.&rdquo;</blockquote>
+    <cite>Allan Kardec — O Evangelho Segundo o Espiritismo</cite>
+    <p class="feature-note">A frase resume, em poucas palavras, toda a lei moral da doutrina: a caridade não é um complemento opcional da ética espírita, mas sua própria condição — a medida pela qual se avalia o progresso real de um espírito.</p>
+  </div>
+</section>
+
+<!-- ===================== EVOLUÇÃO ===================== -->
+<section class="section-pad bg-panel" id="evolucao">
+  <div class="wrap split reverse">
+    <div class="split-text">
+      <div class="eyebrow-rule"></div>
+      <h2>Reencarnação e livre-arbítrio</h2>
+      <p class="measure">A pluralidade das existências é o mecanismo pelo qual a evolução moral se torna possível: as dificuldades da vida presente são compreendidas como consequência de escolhas passadas e, ao mesmo tempo, como oportunidade de aprendizado — não como punição definitiva.</p>
+      <p class="measure">O livre-arbítrio permanece central: recompensa e sofrimento não são impostos por um destino externo, mas decorrem, com naturalidade, das próprias escolhas — uma lei de causa e efeito que atravessa mais de uma vida. A morte deixa assim de ser vista como fim e passa a ser uma transição, o que dá à ética espírita um horizonte de longo prazo.</p>
+    </div>
+    <div class="split-media">
+      <img src="https://images.unsplash.com/photo-1561212856-44e9bae482aa?auto=format&fit=crop&w=1200&q=80" alt="Chama de uma vela acesa na penumbra, símbolo da continuidade da consciência">
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FÉ E RAZÃO ===================== -->
+<section class="section-pad bg-void" id="fe-razao">
+  <div class="wrap">
+    <div class="plain">
+      <div class="eyebrow-rule"></div>
+      <h2>Fé raciocinada e tolerância</h2>
+      <p>Kardec sustentava que uma fé incapaz de resistir ao exame da razão não merece subsistir. Esse princípio afasta o dogmatismo e convida ao exame pessoal de qualquer ensinamento, inclusive os da própria doutrina, antes de sua aceitação.</p>
+      <p>Dessa postura nasce um valor prático: a tolerância. Não como indiferença, mas como respeito ativo à liberdade de consciência de cada pessoa — já que, se nenhuma verdade é imposta sem exame, também nenhuma crença alheia pode ser desprezada sem exame.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ENCERRAMENTO — FEATURE ===================== -->
+<section class="feature encerra">
+  <div class="feature-content">
+    <blockquote>Cada existência é uma página; a ética espírita ensina a escrevê-la com amor.</blockquote>
+  </div>
+</section>
+
+</body>
+</html>
